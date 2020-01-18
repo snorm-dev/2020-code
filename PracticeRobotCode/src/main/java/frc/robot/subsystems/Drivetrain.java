@@ -25,21 +25,21 @@ public class Drivetrain extends SubsystemBase {
   private WPI_VictorSPX m_rightSlaveMotor;
 
   private DifferentialDrive m_drive;
-
+  
   public Drivetrain() {
-
-    //set up drive motors
+    
+    //set up drive motors;
     m_leftMasterMotor = new WPI_TalonSRX(leftID);
     m_leftSlaveMotor = new WPI_VictorSPX(leftID);
 
     m_leftMasterMotor.setInverted(isLeftInverted);
     m_leftSlaveMotor.setInverted(isLeftInverted);
-    
+
     m_leftSlaveMotor.follow(m_leftMasterMotor);
 
     m_rightMasterMotor = new WPI_TalonSRX(rightID);
     m_rightSlaveMotor = new WPI_VictorSPX(rightID);
-    
+
     m_rightMasterMotor.setInverted(isRightInverted);
     m_rightSlaveMotor.setInverted(isRightInverted);
 
@@ -51,7 +51,6 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
   }
 
   public void resetEncoderPositions() {
