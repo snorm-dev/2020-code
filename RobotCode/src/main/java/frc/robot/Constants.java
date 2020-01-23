@@ -23,4 +23,10 @@ public final class Constants {
         public static boolean isTankDriveSquared = true;
         public static boolean doesCheesyDrivePivot = true;
     }
+    public static class SpinnerConstants {
+        public static int motorID = 0;
+        public static int pistonModuleID = 0;
+        public static int fowardID = 0;
+        public static int reverseID = 0;
+    }
 }

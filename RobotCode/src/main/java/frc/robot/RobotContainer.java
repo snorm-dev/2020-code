@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveCheesy;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Spinner;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,6 +37,8 @@ public class RobotContainer {
 
   //SUBSYSTEMS
   private final Drivetrain m_drivetrain = new Drivetrain();
+
+  private final Spinner m_spinner = new Spinner();
   
   //CONTROLLERS & BUTTONS
   private final XboxController m_xbox = new XboxController(0);
