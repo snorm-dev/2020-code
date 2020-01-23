@@ -19,8 +19,6 @@ public final class Constants {
     public static class DrivetrainConstants {
         public static int leftID = 0;
         public static int rightID = 1;
-        public static boolean isLeftInverted = false;
-        public static boolean isRightInverted = true;
 
         public static boolean isTankDriveSquared = true;
         public static boolean doesCheesyDrivePivot = true;
