@@ -17,10 +17,8 @@ package frc.robot;
  */
 public final class Constants {
     public static class DrivetrainConstants {
-        public static int leftID = 0;
-        public static int rightID = 1;
-        public static boolean isLeftInverted = false;
-        public static boolean isRightInverted = true;
+        public static int leftID = 1;
+        public static int rightID = 2;
 
         public static boolean isTankDriveSquared = true;
         public static boolean doesCheesyDrivePivot = true;
