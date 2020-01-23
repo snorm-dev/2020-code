@@ -23,4 +23,15 @@ public final class Constants {
         public static boolean isTankDriveSquared = true;
         public static boolean doesCheesyDrivePivot = true;
     }
+    public static class ClimberConstants {
+        public static int leftWinchID = 0;
+        public static int rightWinchID = 0;
+        public static int lowerPistonsModuleID = 0;
+        public static int lowerPistonsForwardID = 0;
+        public static int lowerPistonsReverseID = 0;
+        public static int upperPistonsModuleID = 0;
+        public static int upperPistonsForwardID = 0;
+        public static int upperPistonsReverseID = 0;
+        
+    }
 }

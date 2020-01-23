@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveCheesy;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -36,6 +37,7 @@ public class RobotContainer {
 
   //SUBSYSTEMS
   private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Climber m_climber = new Climber();
   
   //CONTROLLERS & BUTTONS
   private final XboxController m_xbox = new XboxController(0);
