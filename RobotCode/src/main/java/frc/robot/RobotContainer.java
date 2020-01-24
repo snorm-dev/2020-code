@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCheesy;
 import frc.robot.subsystems.Climber;
@@ -31,12 +30,15 @@ public class RobotContainer {
    */
 
    /**TODO
-   * Climber: 2 winches(x40), 2 solenoids - stage 1&2
-   * Intake: 1 motor(), 1 solenoid w string
-   * Uptake: 1 motor(), 1 solenoid w string?, sensor for knowledge
-   * Indexer: 1 wheel motor()encoder, 2 power cell release solenoids, 1 power cell pull rod solenoid
-   * Shooter: 2 spin motors(x40)encoder, 1 yaw motor()encoder, 1 pitch motor()encoder
-   * Spinner: 1 motor(), 1 solenoid
+   * Intake: 1 motor (VictorSP), 1 piston (DoubleSolenoid), sensor (ignore for now)
+   * Indexer: 1 wheelMotor (VictorSP) w/ encoder (ignore for now), leftReleaseLatch & rightReleaseLatch (DoubleSolenoid), 1 pullRod (DoubleSolenoid)
+   * Shooter: leftSpinMotor and rightSpinMotor (WPI_VictorSPX) w/ encoder (ignore for now), 1 yawMotor(VictorSP)encoder, 1 pitchMotor (VictorSP) w/ encoder (ignore for now)
+   */
+  /**on January 24 doooo: create a subsystem for each of the lines above^
+   * declare and instantiate each variable (the class names for each are in parentheses)
+   * don't create any functions yet, we will do that later, just create the variables for now..
+   * don't worry about making a "subsystem"Constants class either, just put in 0 for now.., unless you want to (following your other subsystems as templates..)
+   * if you have any questions message me on discord, good luck!
    */
 
   //SUBSYSTEMS
