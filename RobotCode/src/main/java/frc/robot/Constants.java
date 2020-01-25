@@ -16,9 +16,45 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    /// PORTS /// not final
+    /**TalonSRX
+     * 1 - drive left motor
+     * 2 - drive right motor
+     */ 
+
+    /**VictorSPX
+     * 1 - drive left motor
+     * 2 - drive right motor
+     * 3 - shooter left motor
+     * 4 - shooter right motor
+     * 5 - climber left motor
+     * 6 - climber right motor
+     */
+
+    /**VictorSP / Spark (PWM)
+     * 0 - intake motor
+     * 1 - wheel motor
+     * 2 - shooter yaw motor
+     * 3 - shooter pitch motor
+     * 4 - spinner motor (Spark?)
+     */
+
+    /**PCM 1
+     * 01 - intake piston
+     * 23 - indexer release latch
+     * 45 - indexer pull rod
+     * 67 - shooter trigger solenoid
+     */
+
+    /**PCM 2 
+     * 01 - spinner piston
+     * 23 - climber lower pistons
+     * 45 - climber upper pistons
+     */
+
     public static class DrivetrainConstants {
-        public static int leftID = 0;
-        public static int rightID = 1;
+        public static int leftID = 1;
+        public static int rightID = 2;
 
         public static boolean isTankDriveSquared = true;
         public static boolean doesCheesyDrivePivot = true;
@@ -35,13 +71,9 @@ public final class Constants {
     public static class IndexerConstants {
         public static int wheelMotorID = 0;
 
-        public static int leftReleaseLatchModuleID = 0;
-        public static int leftReleaseLatchForwardID = 0;
-        public static int leftReleaseLatchReverseID = 0;
-
-        public static int rightReleaseLatchModuleID = 0;
-        public static int rightReleaseLatchForwardID = 0;
-        public static int rightReleaseLatchReverseID = 0;
+        public static int releaseLatchModuleID = 0;
+        public static int releaseLatchForwardID = 0;
+        public static int releaseLatchReverseID = 0;
 
         public static int pullRodModuleID = 0;
         public static int pullRodForwardID = 0;
@@ -53,8 +85,12 @@ public final class Constants {
         public static int rightSpinMotorID = 0;
         public static int yawMotorID = 0;
         public static int pitchMotorID = 0;
+
+        public static int triggerModuleID = 0;
+        public static int triggerForwardID = 0;
+        public static int triggerReverseID = 0;
     }
-        
+    
     public static class SpinnerConstants {
         public static int motorID = 0;
         public static int motorSpeed = 1;
