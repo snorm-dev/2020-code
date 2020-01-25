@@ -11,6 +11,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -25,12 +26,14 @@ public class Shooter extends SubsystemBase {
    private WPI_VictorSPX m_rightSpinMotor;
    private VictorSP m_yawMotor;
    private VictorSP m_pitchMotor;
+   private DoubleSolenoid m_trigger;
 
   public Shooter() {
     m_leftSpinMotor = new WPI_VictorSPX(leftSpinMotorID);
     m_rightSpinMotor = new WPI_VictorSPX(rightSpinMotorID);
     m_yawMotor = new VictorSP(yawMotorID);
     m_pitchMotor = new VictorSP(pitchMotorID);
+    m_trigger = new DoubleSolenoid(triggerModuleID, triggerForwardID, triggerReverseID);
   }
 
   @Override
@@ -38,19 +41,23 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run  
   }
 
-  public void setLeftSpinMotor(double speed) {
+  public void setLeftSpinMotorSpeed(double speed) {
     m_leftSpinMotor.set(speed);
   }
 
-  public void setRightSpinMotor(double speed) {
+  public void setRightSpinMotorSpeed(double speed) {
     m_rightSpinMotor.set(speed);
   }
 
-  public void setYawMotor(double speed) {
+  public void setYawMotorSpeed(double speed) {
     m_yawMotor.set(speed);
   }
 
-  public void setPitchMotor(double speed) {
+  public void setPitchMotorSpeed(double speed) {
     m_pitchMotor.set(speed);
+  }
+
+  public void setTriggerPosition(DoubleSolenoid.Value value){
+    m_trigger.set(value);
   }
 }
