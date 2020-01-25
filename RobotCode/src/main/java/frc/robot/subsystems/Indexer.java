@@ -19,14 +19,12 @@ public class Indexer extends SubsystemBase {
    */
 
   private VictorSP m_wheelMotor;
-  private DoubleSolenoid m_leftReleaseLatch;
-  private DoubleSolenoid m_rightReleaseLatch;
+  private DoubleSolenoid m_releaseLatch;
   private DoubleSolenoid m_pullRod;
 
   public Indexer() {
     m_wheelMotor = new VictorSP(wheelMotorID);
-    m_leftReleaseLatch = new DoubleSolenoid(leftReleaseLatchModuleID, leftReleaseLatchForwardID, leftReleaseLatchReverseID);
-    m_rightReleaseLatch = new DoubleSolenoid(rightReleaseLatchModuleID, rightReleaseLatchForwardID, rightReleaseLatchReverseID);
+    m_releaseLatch = new DoubleSolenoid(releaseLatchModuleID, releaseLatchForwardID, releaseLatchReverseID);
     m_pullRod = new DoubleSolenoid(pullRodModuleID, pullRodForwardID, pullRodReverseID);
   }
 
@@ -39,12 +37,8 @@ public class Indexer extends SubsystemBase {
     m_wheelMotor.set(speed);
   }
 
-  public void setLeftReleaseLatchPosition(DoubleSolenoid.Value value){
-    m_leftReleaseLatch.set(value);
-  }
-
-  public void setRightReleaseLatchPosition(DoubleSolenoid.Value value){
-    m_rightReleaseLatch.set(value);
+  public void setReleaseLatchPosition(DoubleSolenoid.Value value){
+    m_releaseLatch.set(value);
   }
 
   public void setPullRodPosition(DoubleSolenoid.Value value){
