@@ -10,12 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCheesy;
-import frc.robot.subsystems.Climber;
-import frc.robot.commands.SpinWheel;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Spinner;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -30,34 +26,29 @@ public class RobotContainer {
    */
 
    /**TODO
-   * Intake: 1 motor (VictorSP), 1 piston (DoubleSolenoid), sensor (ignore for now)
-   * Indexer: 1 wheelMotor (VictorSP) w/ encoder (ignore for now), leftReleaseLatch & rightReleaseLatch (DoubleSolenoid), 1 pullRod (DoubleSolenoid)
+   * Intake: sensor (ignore for now)
+   * Indexer: 1 wheelMotor (VictorSP) w/ encoder (ignore for now)
    * Shooter: leftSpinMotor and rightSpinMotor (WPI_VictorSPX) w/ encoder (ignore for now), 1 yawMotor(VictorSP)encoder, 1 pitchMotor (VictorSP) w/ encoder (ignore for now)
    */
-  /**on January 24 doooo: create a subsystem for each of the lines above^
-   * declare and instantiate each variable (the class names for each are in parentheses)
-   * don't create any functions yet, we will do that later, just create the variables for now..
-   * don't worry about making a "subsystem"Constants class either, just put in 0 for now.., unless you want to (following your other subsystems as templates..)
-   * if you have any questions message me on discord, good luck!
-   */
 
-  //SUBSYSTEMS
+  /// SUBSYSTEMS ///
   private final Drivetrain m_drivetrain = new Drivetrain();
-  private final Climber m_climber = new Climber();
-  private final Spinner m_spinner = new Spinner();
+  //private final Intake m_intake = new Intake();
+  //private final Indexer m_indexer = new Indexer();
+  //private final Shooter m_shooter = new Shooter();
+  //private final Spinner m_spinner = new Spinner();
+  //private final Climber m_climber = new Climber();
   
-  //CONTROLLERS & BUTTONS
+  /// CONTROLLERS & BUTTONS ///
   private final XboxController m_xbox = new XboxController(0);
-  //Not Final
-  private final JoystickButton m_aButton = new JoystickButton(m_xbox, 0);
 
-  //COMMANDS
+  /// COMMANDS ///
   private final DriveCheesy m_driveCheesy = new DriveCheesy(m_drivetrain, m_xbox);
-  private final SpinWheel m_spinWheel = new SpinWheel(m_spinner);
 
   public RobotContainer() {
-    // Configure the button bindings
+    // Configure the initial default commands
     configureInitialDefaultCommands();
+    // Configure the button bindings
     configureButtonBindings();
   }
 
@@ -72,7 +63,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_aButton.toggleWhenPressed(m_spinWheel);
   }
 
 

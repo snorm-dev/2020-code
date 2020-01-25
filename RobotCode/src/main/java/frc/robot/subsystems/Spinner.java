@@ -27,7 +27,7 @@ public class Spinner extends SubsystemBase {
   public Spinner() {
 
     m_motor = new VictorSP(motorID);
-    m_piston = new DoubleSolenoid(pistonModuleID, fowardID, reverseID);
+    m_piston = new DoubleSolenoid(pistonModuleID, pistonFowardID, pistodReverseID);
   }
 
   @Override

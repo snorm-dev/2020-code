@@ -12,9 +12,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends CommandBase {
+import static frc.robot.Constants.ShooterConstants.*;
+
+public class Shooter extends SubsystemBase {
   /**
    * Creates a new Shooter.
    */
@@ -25,48 +27,30 @@ public class Shooter extends CommandBase {
    private VictorSP m_pitchMotor;
 
   public Shooter() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_leftSpinMotor = new WPI_VictorSPX(0);
-    m_rightSpinMotor = new WPI_VictorSPX(0);
-    m_yawMotor = new VictorSP(0);
-    m_pitchMotor = new VictorSP(0);
-
+    m_leftSpinMotor = new WPI_VictorSPX(leftSpinMotorID);
+    m_rightSpinMotor = new WPI_VictorSPX(rightSpinMotorID);
+    m_yawMotor = new VictorSP(yawMotorID);
+    m_pitchMotor = new VictorSP(pitchMotorID);
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void periodic() {
+    // This method will be called once per scheduler run  
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
+  public void setLeftSpinMotor(double speed) {
+    m_leftSpinMotor.set(speed);
   }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
+  public void setRightSpinMotor(double speed) {
+    m_rightSpinMotor.set(speed);
   }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+  public void setYawMotor(double speed) {
+    m_yawMotor.set(speed);
   }
 
-  public void setLeftSpinMotor(0) {
-    m_leftSpinMotor.set();
-  }
-
-  public void setRightSpinMotor(0) {
-    m_rightSpinMotor.set(0);
-  }
-
-  public void setYawMotor(0) {
-    m_yawMotor.set(0);
-  }
-
-  public void setPitchMotor(0) {
-    m_pitchMotor.set(0);
+  public void setPitchMotor(double speed) {
+    m_pitchMotor.set(speed);
   }
 }

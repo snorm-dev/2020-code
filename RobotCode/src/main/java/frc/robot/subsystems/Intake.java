@@ -10,9 +10,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends CommandBase {
+import static frc.robot.Constants.IntakeConstants.*;
+
+public class Intake extends SubsystemBase {
   /**
    * Creates a new Intake.
    */
@@ -20,40 +22,20 @@ public class Intake extends CommandBase {
   private DoubleSolenoid m_piston;
 
   public Intake() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_motor = new VictorSP(0);
-    m_piston = new DoubleSolenoid(0, 0, 0);
-
+    m_motor = new VictorSP(motorID);
+    m_piston = new DoubleSolenoid(pistonModuleID, pistonForwardID, pistonReverseID);
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void periodic() {
+    // This method will be called once per scheduler run  
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(final boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
-
-  public void setMotor() {
-    m_motor.set(0);
-
+  public void setMotorSpeed(double speed) {
+    m_motor.set(speed);
   }
 
   public void setPistonPosition(DoubleSolenoid.Value value) {
-    m_piston.set(0);
-
+    m_piston.set(value);
   }
 }

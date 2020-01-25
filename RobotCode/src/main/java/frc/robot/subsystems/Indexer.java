@@ -9,9 +9,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Indexer extends CommandBase {
+import static frc.robot.Constants.IndexerConstants.*;
+
+public class Indexer extends SubsystemBase {
   /**
    * Creates a new Indexer.
    */
@@ -22,39 +24,17 @@ public class Indexer extends CommandBase {
   private DoubleSolenoid m_pullRod;
 
   public Indexer() {
-    // Use addRequirements() here to declare subsystem dependencies.
-
-    m_wheelMotor = new VictorSP(0);
-    m_leftReleaseLatch = new DoubleSolenoid(0,0);
-    m_rightReleaseLatch = new DoubleSolenoid(0,0);
-    m_pullRod = new DoubleSolenoid(0,0);
-
+    m_wheelMotor = new VictorSP(wheelMotorID);
+    m_leftReleaseLatch = new DoubleSolenoid(leftReleaseLatchModuleID, leftReleaseLatchForwardID, leftReleaseLatchReverseID);
+    m_rightReleaseLatch = new DoubleSolenoid(rightReleaseLatchModuleID, rightReleaseLatchForwardID, rightReleaseLatchReverseID);
+    m_pullRod = new DoubleSolenoid(pullRodModuleID, pullRodForwardID, pullRodReverseID);
   }
 
-  /*
-  I don't know if this code is necessary or if we did something wrong
-  
-  Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void periodic() {
+    // This method will be called once per scheduler run  
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
-  */
   public void setWheelMotorSpeed(double speed){
     m_wheelMotor.set(speed);
   }
