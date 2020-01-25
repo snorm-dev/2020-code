@@ -33,12 +33,13 @@ public class RobotContainer {
    * Uptake: 1 motor(), 1 solenoid w string?, sensor for knowledge
    * Indexer: 1 wheel motor()encoder, 2 power cell release solenoids, 1 power cell pull rod solenoid
    * Shooter: 2 spin motors(x40)encoder, 1 yaw motor()encoder, 1 pitch motor()encoder
-   * Spinner: 1 motor(), 1 solenoid
+   * Spinner: 1 motor(), 1 solenoid 
    */
 
   //SUBSYSTEMS
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final Climber m_climber = new Climber();
+  
   private final Spinner m_spinner = new Spinner();
   
   //CONTROLLERS & BUTTONS
