@@ -40,6 +40,7 @@ public class Drivetrain extends SubsystemBase {
     m_rightSlaveMotor.follow(m_rightMasterMotor);
 
     m_drive = new DifferentialDrive(m_leftMasterMotor, m_rightMasterMotor);
+    this.addChild("Drive Base", m_drive);
   }
 
   @Override

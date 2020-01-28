@@ -29,14 +29,14 @@ public final class Constants {
      * 4 - shooter right motor
      * 5 - climber left motor
      * 6 - climber right motor
+     * 7 - intake motor
+     * 8 - wheel motor
      */
 
     /**VictorSP / Spark (PWM)
-     * 0 - intake motor
-     * 1 - wheel motor
-     * 2 - shooter yaw motor
-     * 3 - shooter pitch motor
-     * 4 - spinner motor (Spark?)
+     * 0 - shooter yaw motor
+     * 1 - shooter pitch motor
+     * 2 - spinner motor
      */
 
     /**PCM 1

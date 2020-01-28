@@ -35,9 +35,11 @@ public class DriveCheesy extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double velocity = m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft);
+    double velocity = -m_xbox.getY(Hand.kRight);
+    //double velocity = m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft);
     double angle = m_xbox.getX(Hand.kLeft);
-    m_drivetrain.cheesyDrive(velocity, angle);
+
+    m_drivetrain.cheesyDrive(velocity * 0.7, angle * 0.5);
   }
 
   // Called once the command ends or is interrupted.

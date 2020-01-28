@@ -20,7 +20,7 @@ public final class Constants {
         public static int leftID = 1;
         public static int rightID = 2;
 
-        public static boolean isTankDriveSquared = true;
+        public static boolean isTankDriveSquared = false;
         public static boolean doesCheesyDrivePivot = true;
     }
 }

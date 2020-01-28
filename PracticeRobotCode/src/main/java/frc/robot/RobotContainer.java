@@ -9,6 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveCheesy;
 import frc.robot.commands.DriveTank;
@@ -41,7 +43,7 @@ public class RobotContainer {
     configureInitialDefaultCommands();
     configureButtonBindings();
   }
-
+  
   private void configureInitialDefaultCommands() {
     m_drivetrain.setDefaultCommand(m_driveCheesy);
   }
@@ -54,8 +56,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
   }
-
-
+  
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -64,5 +66,11 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return null;
+  }
+
+  public void displayValues() {
+    SmartDashboard.putData(m_drivetrain);
+    SmartDashboard.putNumber("velocity", -m_xbox.getY(Hand.kRight));
+    SmartDashboard.putNumber("angle", m_xbox.getX(Hand.kLeft));
   }
 }
