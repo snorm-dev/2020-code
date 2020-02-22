@@ -20,7 +20,11 @@ public final class Constants {
         public static int leftID = 1;
         public static int rightID = 2;
 
-        public static boolean isTankDriveSquared = false;
+        public static boolean isTankDriveSquared = true;
+        public static boolean isArcadeDriveSquared = true;
         public static boolean doesCheesyDrivePivot = true;
+
+        public static double rotationDeadband = 0.30;
+        public static double speedDeadband = 0.17;
     }
 }

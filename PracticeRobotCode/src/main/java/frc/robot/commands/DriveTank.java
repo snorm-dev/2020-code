@@ -7,8 +7,8 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.XboxController;
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -18,13 +18,14 @@ public class DriveTank extends CommandBase {
    */
 
   private Drivetrain m_drivetrain;
-  private XboxController m_xbox;
+  private Supplier<Double> m_left, m_right;
 
-  public DriveTank(Drivetrain drivetrain, XboxController xbox) {
+  public DriveTank(Drivetrain drivetrain, Supplier<Double> left, Supplier<Double> right) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     m_drivetrain = drivetrain;
-    m_xbox = xbox;
+    m_left = left;
+    m_right = right;
   }
 
   // Called when the command is initially scheduled.
@@ -35,8 +36,8 @@ public class DriveTank extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double left = -m_xbox.getY(Hand.kLeft);
-    double right = -m_xbox.getY(Hand.kRight);
+    double left = m_left.get();
+    double right = m_right.get();
     m_drivetrain.tankDrive(left, right);
   }
 

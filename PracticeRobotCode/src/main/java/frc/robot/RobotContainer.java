@@ -8,10 +8,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveCheesy;
 import frc.robot.commands.DriveTank;
 import frc.robot.subsystems.Drivetrain;
@@ -27,27 +29,41 @@ public class RobotContainer {
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-
+  
   //SUBSYSTEMS
   private final Drivetrain m_drivetrain = new Drivetrain();
-
+  
   //CONTROLLERS & BUTTONS
   private final XboxController m_xbox = new XboxController(0);
-
+  
   //COMMANDS
-  private final DriveCheesy m_driveCheesy = new DriveCheesy(m_drivetrain, m_xbox);
-  private final DriveTank m_driveTank = new DriveTank(m_drivetrain, m_xbox);
+  private final DriveTank m_driveTank = new DriveTank(m_drivetrain, () -> -m_xbox.getY(Hand.kLeft), () -> -m_xbox.getY(Hand.kRight));
+
+  private final DriveCheesy m_driveCheesySticks = new DriveCheesy(m_drivetrain, () -> -m_xbox.getY(Hand.kRight), () -> m_xbox.getX(Hand.kLeft));
+  private final DriveCheesy m_driveCheesyTriggers = new DriveCheesy(m_drivetrain, () -> m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft) , () -> m_xbox.getX(Hand.kLeft));
+
+  private final DriveArcade m_driveArcadeSticks = new DriveArcade(m_drivetrain, () -> -m_xbox.getY(Hand.kRight), () -> m_xbox.getX(Hand.kLeft));
+  private final DriveArcade m_driveArcadeTriggers = new DriveArcade(m_drivetrain, () -> m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft) , () -> m_xbox.getX(Hand.kLeft));
 
   public RobotContainer() {
     // Configure the button bindings
     configureInitialDefaultCommands();
     configureButtonBindings();
+    configureShuffleboardCommandButtons();
+  }
+  
+  private void configureShuffleboardCommandButtons() {
+    SmartDashboard.putData("Tank Drive", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveTank), m_drivetrain));
+    SmartDashboard.putData("Cheesy Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesySticks), m_drivetrain));
+    SmartDashboard.putData("Cheesy Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesyTriggers), m_drivetrain));
+    SmartDashboard.putData("Arcade Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeSticks), m_drivetrain));
+    SmartDashboard.putData("Arcade Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeTriggers), m_drivetrain));
   }
   
   private void configureInitialDefaultCommands() {
-    m_drivetrain.setDefaultCommand(m_driveCheesy);
+    m_drivetrain.setDefaultCommand(m_driveCheesyTriggers);
   }
-
+  
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -69,8 +85,11 @@ public class RobotContainer {
   }
 
   public void displayValues() {
-    SmartDashboard.putData(m_drivetrain);
-    SmartDashboard.putNumber("velocity", -m_xbox.getY(Hand.kRight));
-    SmartDashboard.putNumber("angle", m_xbox.getX(Hand.kLeft));
+    SmartDashboard.putNumber("left x", m_xbox.getX(Hand.kLeft));     
+    SmartDashboard.putNumber("left y", -m_xbox.getY(Hand.kLeft));     
+    SmartDashboard.putNumber("left trigger", m_xbox.getTriggerAxis(Hand.kRight));
+    SmartDashboard.putNumber("right x", m_xbox.getX(Hand.kRight));     
+    SmartDashboard.putNumber("right y", -m_xbox.getY(Hand.kRight));
+    SmartDashboard.putNumber("right trigger", m_xbox.getTriggerAxis(Hand.kRight));     
   }
 }

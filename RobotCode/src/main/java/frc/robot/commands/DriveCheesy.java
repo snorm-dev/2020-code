@@ -7,8 +7,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -18,13 +20,14 @@ public class DriveCheesy extends CommandBase {
    */
 
   private Drivetrain m_drivetrain;
-  private XboxController m_xbox;
-
-  public DriveCheesy(Drivetrain drivetrain, XboxController xbox) {
+  private Supplier<Double> m_speed, m_rotation;
+  
+  public DriveCheesy(Drivetrain drivetrain, Supplier<Double> speed, Supplier<Double> rotation) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     m_drivetrain = drivetrain;
-    m_xbox = xbox;
+    m_speed = speed;
+    m_rotation = rotation;
   }
 
   // Called when the command is initially scheduled.
@@ -35,9 +38,10 @@ public class DriveCheesy extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double velocity = m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft);
-    double angle = m_xbox.getX(Hand.kLeft);
-    m_drivetrain.cheesyDrive(velocity, angle);
+    double speed = m_speed.get();
+    double rotation = m_rotation.get();
+
+    m_drivetrain.cheesyDrive(speed, rotation);
   }
 
   // Called once the command ends or is interrupted.

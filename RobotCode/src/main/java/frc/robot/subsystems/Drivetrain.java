@@ -56,7 +56,31 @@ public class Drivetrain extends SubsystemBase {
     m_drive.tankDrive(left, right, isTankDriveSquared);
   }
 
-  public void cheesyDrive(double velocity, double angle) {
-    m_drive.curvatureDrive(velocity, angle, doesCheesyDrivePivot);
+  public void arcadeDrive(double speed, double rotation) {
+
+    speed = (Math.abs(speed) < speedDeadband)?
+            0 : (speed < 0)?
+            (speed + speedDeadband) / (1 - speedDeadband):
+            (speed - speedDeadband) / (1 - speedDeadband);
+    rotation = (Math.abs(rotation) < rotationDeadband)?
+               0 : (rotation < 0)?
+               (rotation + rotationDeadband) / (1 - rotationDeadband):
+               (rotation - rotationDeadband) / (1 -rotationDeadband);
+
+    m_drive.arcadeDrive(speed, rotation, isArcadeDriveSquared);
+  }
+
+  public void cheesyDrive(double speed, double rotation) {
+
+    speed = (Math.abs(speed) < speedDeadband)?
+            0 : (speed < 0)?
+            (speed + speedDeadband) / (1 - speedDeadband):
+            (speed - speedDeadband) / (1 - speedDeadband);
+    rotation = (Math.abs(rotation) < rotationDeadband)?
+               0 : (rotation < 0)?
+               (rotation + rotationDeadband) / (1 - rotationDeadband):
+               (rotation - rotationDeadband) / (1 - rotationDeadband);
+
+    m_drive.curvatureDrive(speed, rotation, doesCheesyDrivePivot);
   }
 }
