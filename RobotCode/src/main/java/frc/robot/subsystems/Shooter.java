@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.ShooterConstants.*;
@@ -28,17 +29,22 @@ public class Shooter extends SubsystemBase {
    private VictorSP m_pitchMotor;
    private DoubleSolenoid m_trigger;
 
-  public Shooter() {
+   private ShuffleboardTab m_tab;
+
+  public Shooter(ShuffleboardTab tab) {
     m_leftSpinMotor = new WPI_VictorSPX(leftSpinMotorID);
     m_rightSpinMotor = new WPI_VictorSPX(rightSpinMotorID);
     m_yawMotor = new VictorSP(yawMotorID);
     m_pitchMotor = new VictorSP(pitchMotorID);
     m_trigger = new DoubleSolenoid(triggerModuleID, triggerForwardID, triggerReverseID);
+
+    m_tab = tab;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run  
+    m_tab.add(this);
   }
 
   public void setLeftSpinMotorSpeed(double speed) {

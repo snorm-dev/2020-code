@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.ClimberConstants.*;
@@ -26,21 +27,23 @@ public class Climber extends SubsystemBase {
     private DoubleSolenoid m_lowerPistons;
     private DoubleSolenoid m_upperPistons;
     
+    private ShuffleboardTab m_tab;
 
-
-  public Climber() {
+  public Climber(ShuffleboardTab tab) {
 
     m_leftWinch = new WPI_VictorSPX(leftWinchID);
     m_rightWinch = new WPI_VictorSPX(rightWinchID);
     m_lowerPistons = new DoubleSolenoid(lowerPistonsModuleID, lowerPistonsForwardID, lowerPistonsReverseID);
     m_upperPistons = new DoubleSolenoid(upperPistonsModuleID, upperPistonsForwardID, upperPistonsReverseID);
 
+    m_tab = tab;
   }
 
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run  
+    // This method will be called once per scheduler run
+    m_tab.add(this);  
   }
   public void setLowerPistonPosition(DoubleSolenoid.Value value){
     m_lowerPistons.set(value);

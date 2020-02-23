@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.IntakeConstants.*;
@@ -21,14 +22,19 @@ public class Intake extends SubsystemBase {
   private VictorSP m_motor;
   private DoubleSolenoid m_piston;
 
-  public Intake() {
+  private ShuffleboardTab m_tab;
+
+  public Intake(ShuffleboardTab tab) {
     m_motor = new VictorSP(motorID);
     m_piston = new DoubleSolenoid(pistonModuleID, pistonForwardID, pistonReverseID);
+
+    m_tab = tab;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run  
+    m_tab.add(this);
   }
 
   public void setMotorSpeed(double speed) {

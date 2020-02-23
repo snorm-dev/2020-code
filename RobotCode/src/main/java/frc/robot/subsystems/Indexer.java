@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.IndexerConstants.*;
@@ -22,26 +23,31 @@ public class Indexer extends SubsystemBase {
   private DoubleSolenoid m_releaseLatch;
   private DoubleSolenoid m_pullRod;
 
-  public Indexer() {
+  private ShuffleboardTab m_tab;
+
+  public Indexer(ShuffleboardTab tab) {
     m_wheelMotor = new VictorSP(wheelMotorID);
     m_releaseLatch = new DoubleSolenoid(releaseLatchModuleID, releaseLatchForwardID, releaseLatchReverseID);
     m_pullRod = new DoubleSolenoid(pullRodModuleID, pullRodForwardID, pullRodReverseID);
+
+    m_tab = tab;
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run  
+    // This method will be called once per scheduler run
+    m_tab.add(this);
   }
 
-  public void setWheelMotorSpeed(double speed){
+  public void setWheelMotorSpeed(double speed) {
     m_wheelMotor.set(speed);
   }
 
-  public void setReleaseLatchPosition(DoubleSolenoid.Value value){
+  public void setReleaseLatchPosition(DoubleSolenoid.Value value) {
     m_releaseLatch.set(value);
   }
 
-  public void setPullRodPosition(DoubleSolenoid.Value value){
+  public void setPullRodPosition(DoubleSolenoid.Value value) {
     m_pullRod.set(value);
   }
 }

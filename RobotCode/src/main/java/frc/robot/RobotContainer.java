@@ -9,6 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,13 +38,15 @@ public class RobotContainer {
    * Shooter: leftSpinMotor and rightSpinMotor (WPI_VictorSPX) w/ encoder (ignore for now), 1 yawMotor(VictorSP)encoder, 1 pitchMotor (VictorSP) w/ encoder (ignore for now)
    */
 
+  private final ShuffleboardTab m_tab = Shuffleboard.getTab("Competition Robot");
+  
   /// SUBSYSTEMS ///
-  private final Drivetrain m_drivetrain = new Drivetrain();
-  //private final Intake m_intake = new Intake();
-  //private final Indexer m_indexer = new Indexer();
-  //private final Shooter m_shooter = new Shooter();
-  //private final Spinner m_spinner = new Spinner();
-  //private final Climber m_climber = new Climber();
+  private final Drivetrain m_drivetrain = new Drivetrain(m_tab);
+  //private final Intake m_intake = new Intake(m_tab);
+  //private final Indexer m_indexer = new Indexer(m_tab);
+  //private final Shooter m_shooter = new Shooter(m_tab);
+  //private final Spinner m_spinner = new Spinner(m_tab);
+  //private final Climber m_climber = new Climber(m_tab);
   
   /// CONTROLLERS & BUTTONS ///
   private final XboxController m_xbox = new XboxController(0);
@@ -66,11 +70,11 @@ public class RobotContainer {
   }
   
     private void configureShuffleboardCommandButtons() {
-      SmartDashboard.putData("Tank Drive", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveTank), m_drivetrain));
-      SmartDashboard.putData("Cheesy Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesySticks), m_drivetrain));
-      SmartDashboard.putData("Cheesy Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesyTriggers), m_drivetrain));
-      SmartDashboard.putData("Arcade Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeSticks), m_drivetrain));
-      SmartDashboard.putData("Arcade Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeTriggers), m_drivetrain));
+      m_tab.add("Tank Drive", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveTank), m_drivetrain));
+      m_tab.add("Cheesy Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesySticks), m_drivetrain));
+      m_tab.add("Cheesy Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesyTriggers), m_drivetrain));
+      m_tab.add("Arcade Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeSticks), m_drivetrain));
+      m_tab.add("Arcade Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeTriggers), m_drivetrain));
     }
   
   private void configureInitialDefaultCommands() {

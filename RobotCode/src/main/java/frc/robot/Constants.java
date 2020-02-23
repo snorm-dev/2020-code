@@ -33,7 +33,7 @@ public final class Constants {
      * 8 - wheel motor
      */
 
-    /**VictorSP / Spark (PWM)
+    /**VictorSP
      * 0 - shooter yaw motor
      * 1 - shooter pitch motor
      * 2 - spinner motor
