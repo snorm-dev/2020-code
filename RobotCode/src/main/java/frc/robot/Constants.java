@@ -16,45 +16,53 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    /// PORTS /// not final
-    /**TalonSRX
-     * 1 - drive left motor
-     * 2 - drive right motor
-     */ 
 
-    /**VictorSPX
-     * 1 - drive left motor
-     * 2 - drive right motor
-     * 3 - shooter left motor
-     * 4 - shooter right motor
-     * 5 - climber left motor
-     * 6 - climber right motor
-     * 7 - intake motor
-     * 8 - wheel motor
+
+    /**
+     * This class defines the port IDs for all CAN speed controllers privately and
+     * in one location so they can be easily updated.
+     * 
+     * <p>These variables should be used in other constants subclasses related to specific subsystems.
      */
+    private static class SpeedControllerCanPortConstants {
+        private static int driveLeft = 1;
+        private static int driveRight = 2;
+        private static int climberLeft = 3;
+        private static int climberRight = 4;
+        private static int shooterLeft = 5;
+        private static int shooterRight = 6;
+        private static int shooterYaw = 7;
+        private static int shooterPitch = 8;
+        private static int intake = 9;
+        private static int indexer = 10;
+    }
 
-    /**VictorSP
-     * 0 - shooter yaw motor
-     * 1 - shooter pitch motor
-     * 2 - spinner motor
+    /**
+     * This class defines the port IDs for all solenoids privately and
+     * in one location so they can be easily updated.
+     * 
+     * <p>These variables should be used in other constants subclasses related to specific subsystems.
      */
+    private static class PcmPortConstants {
+        //PCM 1
+        private static int[] climberLower = {1, 0, 1};
+        private static int[] climberUpper = {1, 2, 3};
+        private static int[] intake = {1, 4, 5};
+        private static int[] shooter = {1, 6, 7};
+        
+        //PCM 2
+        private static int[] spinner = {2, 0, 1};
+        private static int[] indexerRelease = {2, 2, 3};
+        private static int[] indexerPull = {2, 4, 5};
+    }
 
-    /**PCM 1
-     * 01 - intake piston
-     * 23 - indexer release latch
-     * 45 - indexer pull rod
-     * 67 - shooter trigger solenoid
+
+    /**
+     * This class defines constants related to the Drivetrain subsystem
      */
-
-    /**PCM 2 
-     * 01 - spinner piston
-     * 23 - climber lower pistons
-     * 45 - climber upper pistons
-     */
-
     public static class DrivetrainConstants {
-        public static int leftID = 1;
-        public static int rightID = 2;
+        public static int leftID = SpeedControllerCanPortConstants.driveLeft;
+        public static int rightID = SpeedControllerCanPortConstants.driveRight;
 
         public static boolean isTankDriveSquared = true;
         public static boolean isArcadeDriveSquared = true;
@@ -64,56 +72,71 @@ public final class Constants {
         public static double speedDeadband = 0.17;
     }
     
+    /**
+     * This class defines constants related to the Intake subsystem
+     */
     public static class IntakeConstants {
-        public static int motorID = 0;
+        public static int motorID = SpeedControllerCanPortConstants.intake;
 
-        public static int pistonModuleID = 0;
-        public static int pistonForwardID = 0;
-        public static int pistonReverseID = 0;
+        public static int pistonModuleID = PcmPortConstants.intake[0];
+        public static int pistonForwardID = PcmPortConstants.intake[1];
+        public static int pistonReverseID = PcmPortConstants.intake[2];
     }
     
+    /**
+     * This class defines constants related to the Indexer subsystem
+     */
     public static class IndexerConstants {
-        public static int wheelMotorID = 0;
+        public static int wheelMotorID = SpeedControllerCanPortConstants.indexer;
 
-        public static int releaseLatchModuleID = 0;
-        public static int releaseLatchForwardID = 0;
-        public static int releaseLatchReverseID = 0;
+        public static int releaseLatchModuleID = PcmPortConstants.indexerRelease[0];
+        public static int releaseLatchForwardID = PcmPortConstants.indexerRelease[1];
+        public static int releaseLatchReverseID = PcmPortConstants.indexerRelease[2];
 
-        public static int pullRodModuleID = 0;
-        public static int pullRodForwardID = 0;
-        public static int pullRodReverseID = 0;
+        public static int pullRodModuleID = PcmPortConstants.indexerPull[0];
+        public static int pullRodForwardID = PcmPortConstants.indexerPull[1];
+        public static int pullRodReverseID = PcmPortConstants.indexerPull[2];
     }
     
+    /**
+     * This class defines constants related to the Shooter subsystem
+     */
     public static class ShooterConstants {
-        public static int leftSpinMotorID = 0;
-        public static int rightSpinMotorID = 0;
-        public static int yawMotorID = 0;
-        public static int pitchMotorID = 0;
+        public static int leftSpinMotorID = SpeedControllerCanPortConstants.shooterLeft;
+        public static int rightSpinMotorID = SpeedControllerCanPortConstants.shooterRight;
+        public static int yawMotorID = SpeedControllerCanPortConstants.shooterYaw;
+        public static int pitchMotorID = SpeedControllerCanPortConstants.shooterPitch;
 
-        public static int triggerModuleID = 0;
-        public static int triggerForwardID = 0;
-        public static int triggerReverseID = 0;
+        public static int triggerModuleID = PcmPortConstants.shooter[0];
+        public static int triggerForwardID = PcmPortConstants.shooter[1];
+        public static int triggerReverseID = PcmPortConstants.shooter[2];
     }
     
+    /**
+     * This class defines constants related to the Spinner subsystem
+     */
     public static class SpinnerConstants {
         public static int motorID = 0;
         public static int motorSpeed = 1;
 
-        public static int pistonModuleID = 0;
-        public static int pistonFowardID = 0;
-        public static int pistodReverseID = 0;
+        public static int pistonModuleID = PcmPortConstants.spinner[0];
+        public static int pistonFowardID = PcmPortConstants.spinner[1];
+        public static int pistodReverseID = PcmPortConstants.spinner[2];
     }
     
+    /**
+     * This class defines constants related to the Climber subsystem
+     */
     public static class ClimberConstants {
-        public static int leftWinchID = 0;
-        public static int rightWinchID = 0;
+        public static int leftWinchID = SpeedControllerCanPortConstants.climberLeft;
+        public static int rightWinchID = SpeedControllerCanPortConstants.climberRight;
 
-        public static int lowerPistonsModuleID = 0;
-        public static int lowerPistonsForwardID = 0;
-        public static int lowerPistonsReverseID = 0;
+        public static int lowerPistonsModuleID = PcmPortConstants.climberLower[0];
+        public static int lowerPistonsForwardID = PcmPortConstants.climberLower[1];
+        public static int lowerPistonsReverseID = PcmPortConstants.climberLower[2];
 
-        public static int upperPistonsModuleID = 0;
-        public static int upperPistonsForwardID = 0;
-        public static int upperPistonsReverseID = 0;
+        public static int upperPistonsModuleID = PcmPortConstants.climberUpper[0];
+        public static int upperPistonsForwardID = PcmPortConstants.climberUpper[1];
+        public static int upperPistonsReverseID = PcmPortConstants.climberUpper[2];
     }
 }
