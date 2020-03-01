@@ -58,9 +58,9 @@ public class RobotContainer {
     // Configure the initial default commands
     configureInitialDefaultCommands();
     // Configure the button bindings
-    configureControllerButtonBindings();
+    configureButtonBindings();
     // Configure the Shuffleboard Command Buttons
-    configureShuffleboardCommandButtons();
+    configureShuffleboardData();
   }
   
 
@@ -68,12 +68,19 @@ public class RobotContainer {
    * Use this command to define {@link Shuffleboard} buttons using a {@link ShuffleboardTab} and its add() function. 
    * You can put already defined Commands, 
    */
-  private void configureShuffleboardCommandButtons() {
+  private void configureShuffleboardData() {
     m_tab.add("Tank Drive", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveTank), m_drivetrain));
     m_tab.add("Cheesy Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesySticks), m_drivetrain));
     m_tab.add("Cheesy Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesyTriggers), m_drivetrain));
     m_tab.add("Arcade Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeSticks), m_drivetrain));
     m_tab.add("Arcade Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeTriggers), m_drivetrain));
+
+    m_tab.addNumber("left x", () -> m_xbox.getX(Hand.kLeft));     
+    m_tab.addNumber("left y", () -> -m_xbox.getY(Hand.kLeft));     
+    m_tab.addNumber("left trigger", () -> m_xbox.getTriggerAxis(Hand.kRight));
+    m_tab.addNumber("right x", () -> m_xbox.getX(Hand.kRight));     
+    m_tab.addNumber("right y", () -> -m_xbox.getY(Hand.kRight));
+    m_tab.addNumber("right trigger", () -> m_xbox.getTriggerAxis(Hand.kRight));
   }
   
   /**
@@ -90,7 +97,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureControllerButtonBindings() {
+  private void configureButtonBindings() {
   }
   
   
@@ -101,14 +108,5 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return null;
-  }
-
-  public void displayValues() {
-    m_tab.add("left x", m_xbox.getX(Hand.kLeft));     
-    m_tab.add("left y", -m_xbox.getY(Hand.kLeft));     
-    m_tab.add("left trigger", m_xbox.getTriggerAxis(Hand.kRight));
-    m_tab.add("right x", m_xbox.getX(Hand.kRight));     
-    m_tab.add("right y", -m_xbox.getY(Hand.kRight));
-    m_tab.add("right trigger", m_xbox.getTriggerAxis(Hand.kRight));     
   }
 }

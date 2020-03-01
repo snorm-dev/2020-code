@@ -29,12 +29,17 @@ public class Intake extends SubsystemBase {
     m_piston = new DoubleSolenoid(pistonModuleID, pistonForwardID, pistonReverseID);
 
     m_tab = tab;
+
+    configureShuffleboardData();
+  }
+
+  private void configureShuffleboardData() {
+    m_tab.add(this);    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run  
-    m_tab.add(this);
   }
 
   public void setMotorSpeed(double speed) {

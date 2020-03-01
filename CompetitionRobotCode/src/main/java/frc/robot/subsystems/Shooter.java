@@ -39,12 +39,17 @@ public class Shooter extends SubsystemBase {
     m_trigger = new DoubleSolenoid(triggerModuleID, triggerForwardID, triggerReverseID);
 
     m_tab = tab;
+
+    configureShuffleboardData();
+  }
+
+  private void configureShuffleboardData() {
+    m_tab.add(this);    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run  
-    m_tab.add(this);
   }
 
   public void setLeftSpinMotorSpeed(double speed) {

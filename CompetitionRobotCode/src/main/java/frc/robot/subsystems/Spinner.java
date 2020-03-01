@@ -32,12 +32,17 @@ public class Spinner extends SubsystemBase {
     m_piston = new DoubleSolenoid(pistonModuleID, pistonFowardID, pistodReverseID);
 
     m_tab = tab;
+
+    configureShuffleboardData();
+  }
+
+  private void configureShuffleboardData() {
+    m_tab.add(this);    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_tab.add(this);
   }
   public void setPistonPosition(DoubleSolenoid.Value value){
     m_piston.set(value);

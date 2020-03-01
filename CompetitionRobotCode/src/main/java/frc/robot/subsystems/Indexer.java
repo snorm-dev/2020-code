@@ -31,12 +31,17 @@ public class Indexer extends SubsystemBase {
     m_pullRod = new DoubleSolenoid(pullRodModuleID, pullRodForwardID, pullRodReverseID);
 
     m_tab = tab;
+
+    configureShuffleboardData();
+  }
+
+  private void configureShuffleboardData() {
+    m_tab.add(this);    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_tab.add(this);
   }
 
   public void setWheelMotorSpeed(double speed) {

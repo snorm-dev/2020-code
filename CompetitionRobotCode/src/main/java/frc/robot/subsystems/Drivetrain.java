@@ -44,17 +44,23 @@ public class Drivetrain extends SubsystemBase {
     m_drive = new DifferentialDrive(m_leftMasterMotor, m_rightMasterMotor);
 
     m_tab = tab;
+
+    configureShuffleboardData();
+  }
+
+  private void configureShuffleboardData() {
+    m_tab.add(this);
+    m_tab.add("Drive Base", m_drive);
+
+    m_tab.addNumber("Left Encoder Pos", () -> getLeftEncoderPosition());
+    m_tab.addNumber("Right Encoder Pos", () -> getRightEncoderPosition());
+    m_tab.addNumber("Left Encoder Vel", () -> getLeftEncoderVelocity());
+    m_tab.addNumber("Right Encoder Vel", () -> getRightEncoderVelocity());
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_tab.add(this);
-    m_tab.add("Drive Base", m_drive);
-    m_tab.add("Left Encoder Pos", getLeftEncoderPosition());
-    m_tab.add("Right Encoder Pos", getRightEncoderPosition());
-    m_tab.add("Left Encoder Vel", getLeftEncoderVelocity());
-    m_tab.add("Right Encoder Vel", getRightEncoderVelocity());
   }
 
   public void resetEncoderPositions() {

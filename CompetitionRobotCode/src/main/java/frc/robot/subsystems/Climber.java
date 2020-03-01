@@ -37,13 +37,17 @@ public class Climber extends SubsystemBase {
     m_upperPistons = new DoubleSolenoid(upperPistonsModuleID, upperPistonsForwardID, upperPistonsReverseID);
 
     m_tab = tab;
+
+    configureShuffleboardData();
   }
 
+  private void configureShuffleboardData() {
+    m_tab.add(this);    
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    m_tab.add(this);  
   }
   public void setLowerPistonPosition(DoubleSolenoid.Value value){
     m_lowerPistons.set(value);
