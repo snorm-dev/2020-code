@@ -35,7 +35,6 @@ public class RobotContainer {
 
   //SUBSYSTEMS
   private final Drivetrain m_drivetrain = new Drivetrain();
-  //private final MotorTester m_tester = new MotorTester();
   
   //CONTROLLERS & BUTTONS
   private final XboxController m_xbox = new XboxController(0);
@@ -53,20 +52,26 @@ public class RobotContainer {
     // Configure the button bindings
     configureInitialDefaultCommands();
     configureControllerButtonBindings();
-    configureShuffleboardCommandButtons();
+    configureShuffleboardData();
   }
   
-  private void configureShuffleboardCommandButtons() {
+  private void configureShuffleboardData() {
     m_tab.add("Tank Drive", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveTank), m_drivetrain));
     m_tab.add("Cheesy Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesySticks), m_drivetrain));
     m_tab.add("Cheesy Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesyTriggers), m_drivetrain));
     m_tab.add("Arcade Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeSticks), m_drivetrain));
     m_tab.add("Arcade Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeTriggers), m_drivetrain));
+
+    m_tab.addNumber("left x", () -> m_xbox.getX(Hand.kLeft));     
+    m_tab.addNumber("left y", () -> -m_xbox.getY(Hand.kLeft));     
+    m_tab.addNumber("left trigger", () -> m_xbox.getTriggerAxis(Hand.kRight));
+    m_tab.addNumber("right x", () -> m_xbox.getX(Hand.kRight));     
+    m_tab.addNumber("right y", () -> -m_xbox.getY(Hand.kRight));
+    m_tab.addNumber("right trigger", () -> m_xbox.getTriggerAxis(Hand.kRight));
   }
   
   private void configureInitialDefaultCommands() {
     m_drivetrain.setDefaultCommand(m_driveCheesyTriggers);
-    //m_tester.setDefaultCommand(new RunCommand(() -> m_tester.setSpeed(m_xbox.getY(Hand.kLeft)), m_tester));
   }
   
   /**
@@ -87,14 +92,5 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return null;
-  }
-
-  public void displayValues() {
-    m_tab.add("left x", m_xbox.getX(Hand.kLeft));     
-    m_tab.add("left y", -m_xbox.getY(Hand.kLeft));     
-    m_tab.add("left trigger", m_xbox.getTriggerAxis(Hand.kRight));
-    m_tab.add("right x", m_xbox.getX(Hand.kRight));     
-    m_tab.add("right y", -m_xbox.getY(Hand.kRight));
-    m_tab.add("right trigger", m_xbox.getTriggerAxis(Hand.kRight));
   }
 }
