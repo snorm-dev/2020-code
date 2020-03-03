@@ -25,16 +25,22 @@ public final class Constants {
      * <p>These variables should be used in other constants subclasses related to specific subsystems.
      */
     private static class SpeedControllerCanPortConstants {
-        private static int driveLeft = 1;
-        private static int driveRight = 2;
+        //Talons
+        private static int driveLeftTalon = 1;
+        private static int driveRightTalon = 2;
+        private static int shooterLeft = 3;
+        private static int shooterRight = 4;
+        
+        //Victors
+        private static int driveLeftVictor = 1;
+        private static int driveRightVictor = 2;
         private static int climberLeft = 3;
         private static int climberRight = 4;
-        private static int shooterLeft = 5;
-        private static int shooterRight = 6;
-        private static int shooterYaw = 7;
-        private static int shooterPitch = 8;
-        private static int intake = 9;
-        private static int indexer = 10;
+        private static int shooterYaw = 5;
+        private static int indexer = 6;
+        private static int intake = 7;
+        private static int spinner = 8;
+        private static int shooterPitch = 9;
     }
 
     /**
@@ -61,8 +67,10 @@ public final class Constants {
      * This class defines constants related to the Drivetrain subsystem
      */
     public static class DrivetrainConstants {
-        public static int leftID = SpeedControllerCanPortConstants.driveLeft;
-        public static int rightID = SpeedControllerCanPortConstants.driveRight;
+        public static int leftTalonID = SpeedControllerCanPortConstants.driveLeftTalon;
+        public static int leftVictorID = SpeedControllerCanPortConstants.driveLeftVictor;
+        public static int rightTalonID = SpeedControllerCanPortConstants.driveRightTalon;
+        public static int rightVictorID = SpeedControllerCanPortConstants.driveRightVictor;
 
         public static boolean isTankDriveSquared = true;
         public static boolean isArcadeDriveSquared = true;
@@ -116,7 +124,7 @@ public final class Constants {
      * This class defines constants related to the Spinner subsystem
      */
     public static class SpinnerConstants {
-        public static int motorID = 0;
+        public static int motorID = SpeedControllerCanPortConstants.spinner;
         public static int motorSpeed = 1;
 
         public static int pistonModuleID = PcmPortConstants.spinner[0];

@@ -31,13 +31,13 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain(ShuffleboardTab tab) {
     //set up drive motors
-    m_leftMasterMotor = new WPI_TalonSRX(leftID);
-    m_leftSlaveMotor = new WPI_VictorSPX(leftID);
+    m_leftMasterMotor = new WPI_TalonSRX(leftTalonID);
+    m_leftSlaveMotor = new WPI_VictorSPX(leftVictorID);
     
     m_leftSlaveMotor.follow(m_leftMasterMotor);
 
-    m_rightMasterMotor = new WPI_TalonSRX(rightID);
-    m_rightSlaveMotor = new WPI_VictorSPX(rightID);
+    m_rightMasterMotor = new WPI_TalonSRX(rightTalonID);
+    m_rightSlaveMotor = new WPI_VictorSPX(rightVictorID);
 
     m_rightSlaveMotor.follow(m_rightMasterMotor);
 
