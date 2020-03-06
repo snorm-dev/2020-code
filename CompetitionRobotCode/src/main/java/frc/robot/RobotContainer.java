@@ -88,7 +88,7 @@ public class RobotContainer {
    * Default commands are ran whenever no other commands are using a specific subsystem.
    */
   private void configureInitialDefaultCommands() {
-    m_drivetrain.setDefaultCommand(m_driveCheesyTriggers);
+    m_drivetrain.setDefaultCommand(m_driveCheesySticks);
   }
   
   /**

@@ -53,8 +53,8 @@ public class Drivetrain extends SubsystemBase {
     m_tab.add("Drive Base", m_drive);
 
     m_tab.addNumber("Left Encoder Pos", () -> getLeftEncoderPosition());
-    m_tab.addNumber("Right Encoder Pos", () -> getRightEncoderPosition());
     m_tab.addNumber("Left Encoder Vel", () -> getLeftEncoderVelocity());
+    m_tab.addNumber("Right Encoder Pos", () -> getRightEncoderPosition());
     m_tab.addNumber("Right Encoder Vel", () -> getRightEncoderVelocity());
   }
 
