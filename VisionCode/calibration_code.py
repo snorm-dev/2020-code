@@ -92,8 +92,7 @@ if __name__ == '__main__':
     parser.add_argument('--size', '-s', type=float, default=1.0, help='Size of square')
     parser.add_argument('--output', '-o', nargs=1, help="Save the distortion constants to json file")
     parser.add_argument('--output-images', nargs=1, help="Save processed images to directory")
-    parser.add_argument('--input_files', default=["*/pic(2)", "*/pic(3)", "*/pic(4)"], help='input files')
-    #parser.add_argument('input_files', nargs='+', help='input files')
+    parser.add_argument('input_files', nargs='+', help='input files')
 
     args = parser.parse_args()
 
