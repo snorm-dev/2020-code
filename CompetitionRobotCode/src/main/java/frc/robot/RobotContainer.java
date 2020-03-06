@@ -12,47 +12,61 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.AutoDriveTimed;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveCheesy;
 import frc.robot.commands.DriveTank;
 import frc.robot.subsystems.Drivetrain;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   /// SHUFFEBOARD TAB ///
-    //This object is where we will put the data we want to see on the shuffleboard when the robot is running 
+  // This object is where we will put the data we want to see on the shuffleboard
+  // when the robot is running
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Competition Robot");
-  
+  private final SendableChooser<Command> m_chooser = new SendableChooser<Command>();
+
   /// SUBSYSTEMS ///
   private final Drivetrain m_drivetrain = new Drivetrain(m_tab);
-  //private final Intake m_intake = new Intake(m_tab);
-  //private final Indexer m_indexer = new Indexer(m_tab);
-  //private final Shooter m_shooter = new Shooter(m_tab);
-  //private final Spinner m_spinner = new Spinner(m_tab);
-  //private final Climber m_climber = new Climber(m_tab);
-  
+  // private final Intake m_intake = new Intake(m_tab);
+  // private final Indexer m_indexer = new Indexer(m_tab);
+  // private final Shooter m_shooter = new Shooter(m_tab);
+  // private final Spinner m_spinner = new Spinner(m_tab);
+  // private final Climber m_climber = new Climber(m_tab);
+
   /// CONTROLLERS & BUTTONS ///
   private final XboxController m_xbox = new XboxController(0);
-  
+
   /// COMMANDS ///
-  private final DriveTank m_driveTank = new DriveTank(m_drivetrain, () -> -m_xbox.getY(Hand.kLeft), () -> -m_xbox.getY(Hand.kRight));
-  
-  private final DriveCheesy m_driveCheesySticks = new DriveCheesy(m_drivetrain, () -> -m_xbox.getY(Hand.kRight), () -> m_xbox.getX(Hand.kLeft));
-  private final DriveCheesy m_driveCheesyTriggers = new DriveCheesy(m_drivetrain, () -> m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft) , () -> m_xbox.getX(Hand.kLeft));
-  
-  private final DriveArcade m_driveArcadeSticks = new DriveArcade(m_drivetrain, () -> -m_xbox.getY(Hand.kRight), () -> m_xbox.getX(Hand.kLeft));
-  private final DriveArcade m_driveArcadeTriggers = new DriveArcade(m_drivetrain, () -> m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft) , () -> m_xbox.getX(Hand.kLeft));
-  
+  private final AutoDriveTimed m_autoDriveTimedForward = new AutoDriveTimed(m_drivetrain, 0.5, 2);
+  private final AutoDriveTimed m_autoDriveTimedReverse = new AutoDriveTimed(m_drivetrain, -0.5, 2);
+
+  private final DriveTank m_driveTank = new DriveTank(m_drivetrain, () -> -m_xbox.getY(Hand.kLeft),
+      () -> -m_xbox.getY(Hand.kRight));
+
+  private final DriveCheesy m_driveCheesySticks = new DriveCheesy(m_drivetrain, () -> -m_xbox.getY(Hand.kRight),
+      () -> m_xbox.getX(Hand.kLeft));
+  private final DriveCheesy m_driveCheesyTriggers = new DriveCheesy(m_drivetrain,
+      () -> m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft), () -> m_xbox.getX(Hand.kLeft));
+
+  private final DriveArcade m_driveArcadeSticks = new DriveArcade(m_drivetrain, () -> -m_xbox.getY(Hand.kRight),
+      () -> m_xbox.getX(Hand.kLeft));
+  private final DriveArcade m_driveArcadeTriggers = new DriveArcade(m_drivetrain,
+      () -> m_xbox.getTriggerAxis(Hand.kRight) - m_xbox.getTriggerAxis(Hand.kLeft), () -> m_xbox.getX(Hand.kLeft));
+
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the initial default commands
@@ -62,20 +76,32 @@ public class RobotContainer {
     // Configure the Shuffleboard Command Buttons
     configureShuffleboardData();
   }
-  
 
   /**
-   * Use this command to define {@link Shuffleboard} buttons using a {@link ShuffleboardTab} and its add() function. 
-   * You can put already defined Commands, 
+   * Use this command to define {@link Shuffleboard} buttons using a
+   * {@link ShuffleboardTab} and its add() function. You can put already defined
+   * Commands,
    */
   private void configureShuffleboardData() {
-    m_tab.add("Tank Drive", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveTank), m_drivetrain));
-    m_tab.add("Cheesy Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesySticks), m_drivetrain));
-    m_tab.add("Cheesy Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesyTriggers), m_drivetrain));
-    m_tab.add("Arcade Drive with Sticks", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeSticks), m_drivetrain));
-    m_tab.add("Arcade Drive with Triggers", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeTriggers), m_drivetrain));
+    Shuffleboard.selectTab(m_tab.getTitle());
 
-    m_tab.addNumber("left x", () -> m_xbox.getX(Hand.kLeft));     
+    m_chooser.setDefaultOption("Drive Forward", m_autoDriveTimedForward);
+    m_chooser.addOption("Drive Reverse", m_autoDriveTimedReverse);
+    m_chooser.addOption("Nothing", new RunCommand(() -> {
+    }, m_drivetrain));
+    m_tab.add("Auto Chooser", m_chooser);
+
+    m_tab.add("Tank Drive", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveTank), m_drivetrain));
+    m_tab.add("Cheesy Drive with Sticks",
+        new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesySticks), m_drivetrain));
+    m_tab.add("Cheesy Drive with Triggers",
+        new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesyTriggers), m_drivetrain));
+    m_tab.add("Arcade Drive with Sticks",
+        new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeSticks), m_drivetrain));
+    m_tab.add("Arcade Drive with Triggers",
+        new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeTriggers), m_drivetrain));
+
+    m_tab.addNumber("left x", () -> m_xbox.getX(Hand.kLeft));
     m_tab.addNumber("left y", () -> -m_xbox.getY(Hand.kLeft));     
     m_tab.addNumber("left trigger", () -> m_xbox.getTriggerAxis(Hand.kRight));
     m_tab.addNumber("right x", () -> m_xbox.getX(Hand.kRight));     
@@ -107,6 +133,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    Command autoCommand = m_chooser.getSelected();
+    return autoCommand;
   }
 }
