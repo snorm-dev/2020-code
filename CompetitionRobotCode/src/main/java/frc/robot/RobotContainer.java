@@ -7,15 +7,19 @@
 
 package frc.robot;
 
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.AutoDriveTimed;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveCheesy;
@@ -36,7 +40,7 @@ public class RobotContainer {
   // when the robot is running
   private final ShuffleboardTab m_tab = Shuffleboard.getTab("Competition Robot");
   private final SendableChooser<Command> m_chooser = new SendableChooser<Command>();
-
+  
   /// SUBSYSTEMS ///
   private final Drivetrain m_drivetrain = new Drivetrain(m_tab);
   // private final Intake m_intake = new Intake(m_tab);
@@ -75,6 +79,7 @@ public class RobotContainer {
     configureButtonBindings();
     // Configure the Shuffleboard Command Buttons
     configureShuffleboardData();
+    
   }
 
   /**
@@ -87,26 +92,42 @@ public class RobotContainer {
 
     m_chooser.setDefaultOption("Drive Forward", m_autoDriveTimedForward);
     m_chooser.addOption("Drive Reverse", m_autoDriveTimedReverse);
-    m_chooser.addOption("Nothing", new RunCommand(() -> {
-    }, m_drivetrain));
-    m_tab.add("Auto Chooser", m_chooser);
+    m_chooser.addOption("Nothing", null);
 
-    m_tab.add("Tank Drive", new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveTank), m_drivetrain));
-    m_tab.add("Cheesy Drive with Sticks",
-        new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesySticks), m_drivetrain));
-    m_tab.add("Cheesy Drive with Triggers",
-        new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesyTriggers), m_drivetrain));
-    m_tab.add("Arcade Drive with Sticks",
-        new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeSticks), m_drivetrain));
-    m_tab.add("Arcade Drive with Triggers",
-        new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeTriggers), m_drivetrain));
+    ShuffleboardLayout drivingStyleLayout = m_tab.getLayout("driving styles", BuiltInLayouts.kList)
+    .withPosition(0, 0).withSize(3, 6)
+    .withProperties(Map.of("label position", "BOTTOM"));
+    
+    drivingStyleLayout.add("Tank Drive", 
+    new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveTank), m_drivetrain));
+    drivingStyleLayout.add("Cheesy Drive with Sticks",
+    new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesySticks), m_drivetrain));
+    drivingStyleLayout.add("Cheesy Drive with Triggers",
+    new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveCheesyTriggers), m_drivetrain));
+    drivingStyleLayout.add("Arcade Drive with Sticks",
+    new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeSticks), m_drivetrain));
+    drivingStyleLayout.add("Arcade Drive with Triggers",
+    new InstantCommand(() -> m_drivetrain.setDefaultCommand(m_driveArcadeTriggers), m_drivetrain));
+    
+    ShuffleboardLayout controllerLayout = m_tab.getLayout("xbox", BuiltInLayouts.kGrid)
+    .withPosition(3, 0).withSize(2, 6)
+    .withProperties(Map.of("label position", "BOTTOM"));
+    controllerLayout.addNumber("left y", () -> -m_xbox.getY(Hand.kLeft))
+    .withPosition(0, 0).withSize(2, 1).withWidget(BuiltInWidgets.kNumberBar);
+    controllerLayout.addNumber("left x", () -> m_xbox.getX(Hand.kLeft))
+    .withPosition(0, 1).withSize(2, 1).withWidget(BuiltInWidgets.kNumberBar);
+    controllerLayout.addNumber("left trigger", () -> m_xbox.getTriggerAxis(Hand.kLeft))
+    .withPosition(0, 2).withSize(2, 1).withWidget(BuiltInWidgets.kNumberBar);
+    controllerLayout.addNumber("right y", () -> -m_xbox.getY(Hand.kRight))
+    .withPosition(2, 0).withSize(2, 1).withWidget(BuiltInWidgets.kNumberBar);
+    controllerLayout.addNumber("right x", () -> m_xbox.getX(Hand.kRight))
+    .withPosition(2, 1).withSize(2, 1).withWidget(BuiltInWidgets.kNumberBar);
+    controllerLayout.addNumber("right trigger", () -> m_xbox.getTriggerAxis(Hand.kRight))
+    .withPosition(2, 2).withSize(2, 1).withWidget(BuiltInWidgets.kNumberBar);
 
-    m_tab.addNumber("left x", () -> m_xbox.getX(Hand.kLeft));
-    m_tab.addNumber("left y", () -> -m_xbox.getY(Hand.kLeft));     
-    m_tab.addNumber("left trigger", () -> m_xbox.getTriggerAxis(Hand.kRight));
-    m_tab.addNumber("right x", () -> m_xbox.getX(Hand.kRight));     
-    m_tab.addNumber("right y", () -> -m_xbox.getY(Hand.kRight));
-    m_tab.addNumber("right trigger", () -> m_xbox.getTriggerAxis(Hand.kRight));
+    m_tab.add("Auto Chooser", m_chooser)
+    .withPosition(0, 6).withSize(5, 2)
+    .withWidget(BuiltInWidgets.kSplitButtonChooser);   
   }
   
   /**
@@ -133,7 +154,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    Command autoCommand = m_chooser.getSelected();
-    return autoCommand;
+    return m_chooser.getSelected();
   }
 }

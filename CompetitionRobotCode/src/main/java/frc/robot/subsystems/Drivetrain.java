@@ -7,14 +7,24 @@
 
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.DrivetrainConstants.doesCheesyDrivePivot;
+import static frc.robot.Constants.DrivetrainConstants.isArcadeDriveSquared;
+import static frc.robot.Constants.DrivetrainConstants.isTankDriveSquared;
+import static frc.robot.Constants.DrivetrainConstants.leftTalonID;
+import static frc.robot.Constants.DrivetrainConstants.leftVictorID;
+import static frc.robot.Constants.DrivetrainConstants.rightTalonID;
+import static frc.robot.Constants.DrivetrainConstants.rightVictorID;
+import static frc.robot.Constants.DrivetrainConstants.rotationDeadband;
+import static frc.robot.Constants.DrivetrainConstants.speedDeadband;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import static frc.robot.Constants.DrivetrainConstants.*;
 
 public class Drivetrain extends SubsystemBase {
   /**
@@ -49,13 +59,14 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private void configureShuffleboardData() {
-    m_tab.add(this);
-    m_tab.add("Drive Base", m_drive);
+    ShuffleboardLayout layout = m_tab.getLayout("Drivetrain Data", BuiltInLayouts.kGrid).withPosition(8, 0);
+    layout.add(this);
+    layout.add("Drive Base", m_drive);
 
-    m_tab.addNumber("Left Encoder Pos", () -> getLeftEncoderPosition());
-    m_tab.addNumber("Left Encoder Vel", () -> getLeftEncoderVelocity());
-    m_tab.addNumber("Right Encoder Pos", () -> getRightEncoderPosition());
-    m_tab.addNumber("Right Encoder Vel", () -> getRightEncoderVelocity());
+    layout.addNumber("Left Encoder Pos", () -> getLeftEncoderPosition());
+    layout.addNumber("Left Encoder Vel", () -> getLeftEncoderVelocity());
+    layout.addNumber("Right Encoder Pos", () -> getRightEncoderPosition());
+    layout.addNumber("Right Encoder Vel", () -> getRightEncoderVelocity());
   }
 
   @Override
